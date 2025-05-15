@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axiosInstance from "../../../utils/axios";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -17,6 +17,8 @@ const MainContact = () => {
   const IS_DEV_ENV =
     import.meta.env.VITE_HOST === "localhost" &&
     import.meta.env.VITE_NODE_ENV === "development";
+
+  const recaptchaRef = useRef(null); // <-- add this ref
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,6 +51,12 @@ const MainContact = () => {
       // setStatusMessage("Message sent successfully!");
       toast.success("Message sent successfully!");
       setFormData({ fullName: "", email: "", subject: "", message: "" });
+
+      // ✅ Reset the reCAPTCHA and token
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+      setRecaptchaToken(""); // Reset token manually too
     } catch {
       // console.error("Failed to send message:", error);
       toast.error("Failed to send message. Please try again later.");
@@ -116,6 +124,7 @@ const MainContact = () => {
                         sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} // Use your site key
                         onChange={(token) => setRecaptchaToken(token)}
                         onExpired={() => setRecaptchaToken("")}
+                        ref={recaptchaRef}
                       />
                     </>
                   )}
