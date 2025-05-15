@@ -15,7 +15,7 @@ const MainContact = () => {
   const [loading, setLoading] = useState(false); // <-- added loading state
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const IS_DEV_ENV =
-    window.location.hostname === "localhost" &&
+    import.meta.env.VITE_HOST === "localhost" &&
     import.meta.env.VITE_NODE_ENV === "development";
 
   const handleChange = (e) => {
@@ -43,6 +43,7 @@ const MainContact = () => {
         email: formData.email,
         subject: formData.subject,
         message: formData.message,
+        recaptchaToken: recaptchaToken, // <-- add this line
       });
 
       // setStatusMessage("Message sent successfully!");
