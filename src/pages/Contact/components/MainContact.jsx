@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../utils/axios";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const MainContact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,10 @@ const MainContact = () => {
 
   const [statusMessage, setStatusMessage] = useState("");
   const [loading, setLoading] = useState(false); // <-- added loading state
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const IS_DEV_ENV =
+    window.location.hostname === "localhost" &&
+    import.meta.env.VITE_NODE_ENV === "development";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +32,12 @@ const MainContact = () => {
     setStatusMessage("");
 
     try {
+      if (!IS_DEV_ENV && !recaptchaToken) {
+        toast.error("Please verify the reCAPTCHA.");
+        setLoading(false);
+        return;
+      }
+
       await axiosInstance.post("/api/inquiries", {
         full_name: formData.fullName,
         email: formData.email,
@@ -88,7 +99,7 @@ const MainContact = () => {
                     />
                     <span className="fa fa-sticky-note"></span>
                   </div>
-                  <div className="input__item text__area">
+                  <div className="input__item text__area mb-3">
                     <textarea
                       name="message"
                       className="form-control rounded-0"
@@ -98,12 +109,28 @@ const MainContact = () => {
                       onChange={handleChange}
                     ></textarea>
                   </div>
-                  <button type="submit" className="site-btn" disabled={loading}>
+                  {!IS_DEV_ENV && (
+                    <>
+                      <ReCAPTCHA
+                        sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} // Use your site key
+                        onChange={(token) => setRecaptchaToken(token)}
+                        onExpired={() => setRecaptchaToken("")}
+                      />
+                    </>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="site-btn mt-4"
+                    disabled={loading}
+                  >
                     {loading ? "Submitting..." : "Submit"}
                   </button>
                 </form>
                 {statusMessage && (
-                  <p style={{ marginTop: "10px", color: "white" }}>{statusMessage}</p>
+                  <p style={{ marginTop: "10px", color: "white" }}>
+                    {statusMessage}
+                  </p>
                 )}
               </div>
             </div>
@@ -114,25 +141,46 @@ const MainContact = () => {
                 <h3>Contact Information</h3>
                 <ul style={{ listStyle: "none", paddingLeft: 0 }}>
                   <li style={{ marginBottom: "10px", color: "white" }}>
-                    <i className="fa fa-user" style={{ marginRight: "10px" }}></i>
+                    <i
+                      className="fa fa-user"
+                      style={{ marginRight: "10px" }}
+                    ></i>
                     Jude Alexis Dy
                   </li>
                   <li style={{ marginBottom: "10px" }}>
-                    <i className="fa fa-phone" style={{ marginRight: "10px", color: "white" }}></i>
+                    <i
+                      className="fa fa-phone"
+                      style={{ marginRight: "10px", color: "white" }}
+                    ></i>
                     <a href="tel:+639204042919">+63 9204042919</a>
                   </li>
                   <li style={{ marginBottom: "10px" }}>
-                    <i className="fa fa-envelope" style={{ marginRight: "10px", color: "white" }}></i>
-                    <a href="mailto:dyjudealexis@gmail.com">dyjudealexis@gmail.com</a>
+                    <i
+                      className="fa fa-envelope"
+                      style={{ marginRight: "10px", color: "white" }}
+                    ></i>
+                    <a href="mailto:dyjudealexis@gmail.com">
+                      dyjudealexis@gmail.com
+                    </a>
                   </li>
                   <li style={{ marginBottom: "10px" }}>
-                    <i className="fa fa-globe" style={{ marginRight: "10px", color: "white" }}></i>
-                    <a href="https://jude-alexis-dy.site" target="_blank" rel="noopener noreferrer">
+                    <i
+                      className="fa fa-globe"
+                      style={{ marginRight: "10px", color: "white" }}
+                    ></i>
+                    <a
+                      href="https://jude-alexis-dy.site"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       jude-alexis-dy.site
                     </a>
                   </li>
                   <li style={{ marginBottom: "10px" }}>
-                    <i className="fa fa-linkedin" style={{ marginRight: "10px", color: "white" }}></i>
+                    <i
+                      className="fa fa-linkedin"
+                      style={{ marginRight: "10px", color: "white" }}
+                    ></i>
                     <a
                       href="https://www.linkedin.com/in/jude-alexis-dy-9b7213215"
                       target="_blank"
@@ -142,11 +190,17 @@ const MainContact = () => {
                     </a>
                   </li>
                   <li style={{ marginBottom: "10px", color: "white" }}>
-                    <i className="fa fa-map-marker" style={{ marginRight: "10px" }}></i>
+                    <i
+                      className="fa fa-map-marker"
+                      style={{ marginRight: "10px" }}
+                    ></i>
                     Taguig City, Metro Manila, Philippines
                   </li>
                   <li style={{ marginBottom: "10px", color: "white" }}>
-                    <i className="fa fa-calendar" style={{ marginRight: "10px" }}></i>
+                    <i
+                      className="fa fa-calendar"
+                      style={{ marginRight: "10px" }}
+                    ></i>
                     Available: Mon–Fri, 9AM–6PM
                   </li>
                 </ul>
