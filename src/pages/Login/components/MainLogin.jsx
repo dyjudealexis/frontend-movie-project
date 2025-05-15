@@ -6,8 +6,8 @@ import { setEncryptedCookie } from "../../../utils/cookieUtils";
 
 const MainLogin = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "demoaccount@example.com",
+    password: "demoaccount123",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
