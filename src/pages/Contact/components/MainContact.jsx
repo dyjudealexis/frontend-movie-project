@@ -127,8 +127,8 @@ const MainContact = () => {
                   </li>
                   <li style={{ marginBottom: "10px" }}>
                     <i className="fa fa-globe" style={{ marginRight: "10px", color: "white" }}></i>
-                    <a href="https://jude.example.com" target="_blank" rel="noopener noreferrer">
-                      jude.example.com
+                    <a href="https://jude-alexis-dy.site" target="_blank" rel="noopener noreferrer">
+                      jude-alexis-dy.site
                     </a>
                   </li>
                   <li style={{ marginBottom: "10px" }}>
