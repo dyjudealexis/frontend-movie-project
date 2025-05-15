@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Footer from "./components/Footer";
 import MovieLists from "../../components/MovieLists";
+import SEO from "../../components/SEO";
 
 function Home() {
   useEffect(() => {
@@ -14,6 +15,19 @@ function Home() {
 
   return (
     <>
+      <SEO
+        title="StreamFlix - Watch Action, Horror, Fantasy, and Drama Movies"
+        description="StreamFlix is your go-to platform for action-packed, spine-chilling, and emotionally gripping movies. Dive into fantasy worlds and dramatic tales today."
+        keywords={[
+          "StreamFlix",
+          "movies",
+          "action",
+          "horror",
+          "fantasy",
+          "drama",
+          "streaming",
+        ]}
+      />
       <Header />
       <Hero />
       <div className="mt-5"></div>

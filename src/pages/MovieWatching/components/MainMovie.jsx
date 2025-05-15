@@ -6,12 +6,17 @@ import Cookies from "js-cookie";
 import { getPageLabel } from "../../../utils/getPageLabel";
 import { getFirstItem } from "../../../utils/getFirstItem";
 import { toast } from "react-toastify";
+import SEO from "../../../components/SEO";
 
 const MainMovie = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const fetchMovieData = (id) => {
+    return axiosInstance.get(`/api/movies/${id}`).then((res) => res.data);
+  };
 
   const backToFunction = (id, genre) => {
     Cookies.set("currentPath", `/category/${getFirstItem(genre)}`);
@@ -21,14 +26,13 @@ const MainMovie = () => {
   };
 
   useEffect(() => {
-    axiosInstance
-      .get(`/api/movies/${id}`)
-      .then((response) => {
-        setMovie(response.data);
+    setLoading(true);
+    fetchMovieData(id)
+      .then((data) => {
+        setMovie(data);
         setLoading(false);
       })
       .catch(() => {
-        //console.error("Error fetching movie data", error);
         setLoading(false);
         toast.error("Error fetching movie data.");
       });
@@ -58,33 +62,54 @@ const MainMovie = () => {
   const videoId = extractYouTubeVideoId(movie.movie_url);
 
   return (
-    <section className="anime-details spad" style={{ minHeight: "100vh" }}>
-      <div className="container">
-        <div className="mb-4">
-          <button onClick={() => backToFunction(`${movie.id}`, `${movie.genre}`)} className="primary-btn">
-            <span className="arrow_left"></span> Back To {`${getPageLabel(movie.id)}`}
-          </button>
-        </div>
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="anime__video__player">
-              {videoId && (
-                <iframe
-                  width="100%"
-                  height="463"
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  title={movie.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                ></iframe>
-              )}
+    <>
+      <SEO
+        title={movie ? "Watch " + movie.title : "Loading Movie... | StreamFlix"}
+        description={
+          movie
+            ? movie.description
+            : "Browse movies and streaming details on StreamFlix."
+        }
+        keywords={[
+          "movies",
+          "streaming",
+          "StreamFlix",
+          "movie watch",
+          "watch online",
+        ]}
+      />
+      <section className="anime-details spad" style={{ minHeight: "100vh" }}>
+        <div className="container">
+          <div className="mb-4">
+            <button
+              onClick={() => backToFunction(`${movie.id}`, `${movie.genre}`)}
+              className="primary-btn"
+            >
+              <span className="arrow_left"></span> Back To{" "}
+              {`${getPageLabel(movie.id)}`}
+            </button>
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="anime__video__player">
+                {videoId && (
+                  <iframe
+                    width="100%"
+                    height="463"
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title={movie.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  ></iframe>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
