@@ -28,8 +28,8 @@ const Header = () => {
 
     toast.success("Log out successful!");
 
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   return (
     <header className="header">
@@ -183,16 +183,36 @@ const Header = () => {
                   <span className="icon_search"></span> Search
                 </Link>
               </li>
-              <li>
-                <Link to="/login" onClick={toggleMobileMenu}>
-                  <LoginIcon /> Login
-                </Link>
-              </li>
-              <li>
-                <Link to="/sign-up" onClick={toggleMobileMenu}>
-                  <SignUpIcon /> Sign Up
-                </Link>
-              </li>
+              {!userInfo || !bearerToken ? (
+                <>
+                  <li>
+                    <Link to="/login" onClick={toggleMobileMenu}>
+                      <LoginIcon /> Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/sign-up" onClick={toggleMobileMenu}>
+                      <SignUpIcon /> Sign Up
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="mt-4">
+                    <h5 className="text-white fw-bold">
+                      {"Hi, " + userInfo.full_name}
+                    </h5>
+                  </li>
+                  <li>
+                    <button
+                      className="text-white border-0 bg-transparent"
+                      onClick={logOut}
+                    >
+                      <span className="fa fa-sign-out"></span> Log out
+                    </button>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         )}
