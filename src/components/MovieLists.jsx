@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const MovieLists = ({ genre = "", limit = 8 , search = "" }) => {
   const [movies, setMovies] = useState([]);
@@ -34,8 +35,9 @@ const MovieLists = ({ genre = "", limit = 8 , search = "" }) => {
 
           setMovies(response.data);
         }
-      } catch (error) {
-        console.error("Error fetching movies:", error);
+      } catch {
+        // console.error("Error fetching movies:", error);
+        toast.error("Error fetching movies.");
       } finally {
         setLoading(false); // <-- Stop loading after fetch
       }

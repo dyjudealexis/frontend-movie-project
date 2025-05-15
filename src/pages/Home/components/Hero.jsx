@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../../utils/axios";
+import { toast } from "react-toastify";
 
 const movieTitles = ["One Shot", "You're My Boss", "The Legend of Lake Hollow"];
 
@@ -24,9 +25,10 @@ const Hero = () => {
 
         setMovies(movieData);
         setLoading(false); // Set loading to false once data is fetched
-      } catch (error) {
-        console.error("Failed to fetch movies:", error);
+      } catch {
+        // console.error("Failed to fetch movies:", error);
         setLoading(false); // In case of an error, stop loading
+        toast.error("Failed to fetch movies.");
       }
     };
 

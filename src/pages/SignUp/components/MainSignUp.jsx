@@ -51,8 +51,8 @@ const MainSignUp = () => {
       });
       toast.success("Registration successful! You can now login.");
       navigate('/login');
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // console.error(err);
       toast.error("Registration failed. Please try again.");
     } finally {
       setLoading(false);

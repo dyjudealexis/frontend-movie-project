@@ -37,8 +37,8 @@ const MainLogin = () => {
       setEncryptedCookie(`${import.meta.env.VITE_COOKIE_USER_INFO_NAME}`, JSON.stringify(res.data.user), { expires: 7 });
 
       navigate("/"); // adjust path if needed
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // console.error(err);
       toast.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);

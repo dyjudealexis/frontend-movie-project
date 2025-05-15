@@ -4,6 +4,7 @@ import axiosInstance from "../../../utils/axios";
 import Spinner from "../../../components/Spinner";
 import { getPageLabel } from "../../../utils/getPageLabel";
 import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 
 const MainDetails = () => {
   const { id } = useParams(); // Get movie ID from the URL
@@ -24,8 +25,9 @@ const MainDetails = () => {
         const response = await axiosInstance.get(`/api/movies/${id}`);
         setMovie(response.data);
         console.log(response.data);
-      } catch (error) {
-        console.error("Failed to fetch movie details:", error);
+      } catch {
+        // console.error("Failed to fetch movie details:", error);
+        toast.error("Failed to fetch movie details.");
       }
     };
 

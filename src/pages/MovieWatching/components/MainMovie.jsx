@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { getPageLabel } from "../../../utils/getPageLabel";
 import { getFirstItem } from "../../../utils/getFirstItem";
+import { toast } from "react-toastify";
 
 const MainMovie = () => {
   const [movie, setMovie] = useState(null);
@@ -26,9 +27,10 @@ const MainMovie = () => {
         setMovie(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching movie data", error);
+      .catch(() => {
+        //console.error("Error fetching movie data", error);
         setLoading(false);
+        toast.error("Error fetching movie data.");
       });
   }, [id]);
 
@@ -38,8 +40,9 @@ const MainMovie = () => {
       const urlObj = new URL(url);
       const params = new URLSearchParams(urlObj.search);
       return params.get("v");
-    } catch (error) {
-      console.error("Invalid YouTube URL", error);
+    } catch {
+      //console.error("Invalid YouTube URL", error);
+      toast.error("Invalid YouTube URL.");
       return null;
     }
   };
