@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://streamflix.jude-alexis-dy.site/sitemap.xml
