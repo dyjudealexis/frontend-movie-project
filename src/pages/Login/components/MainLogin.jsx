@@ -30,7 +30,7 @@ const MainLogin = () => {
 
     try {
       const res = await axiosInstance.post("/api/login", formData);
-      console.log(res.data);
+      //console.log(res.data);
       toast.success("Login successful!");
 
       setEncryptedCookie(`${import.meta.env.VITE_COOKIE_BEARER_TOKEN_NAME}`, `${res.data.token}`, { expires: 7 });
