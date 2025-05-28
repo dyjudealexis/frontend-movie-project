@@ -23,16 +23,7 @@ const Footer = () => {
            
             <div className="col-lg-6">
               <p className="m-0 p-0">
-                Copyright &copy;{new Date().getFullYear()} All rights reserved |
-                Template by{" "}
-                <a
-                  href="https://colorlib.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Colorlib
-                </a>
-                {" | "}
+                Copyright &copy;{new Date().getFullYear()} All rights reserved
               </p>
               {/* <br /> */}
               <p className="m-0 p-0">
