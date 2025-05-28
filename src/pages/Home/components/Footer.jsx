@@ -13,7 +13,7 @@ const Footer = () => {
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-9">
               <div className="footer__logo">
                 <Link to="/">
                   <img src="/img/logo.png" alt="" />
@@ -21,7 +21,7 @@ const Footer = () => {
               </div>
             </div>
            
-            <div className="col-lg-6">
+            <div className="col-lg-3">
               <p className="m-0 p-0">
                 Copyright &copy;{new Date().getFullYear()} All rights reserved
               </p>
@@ -29,7 +29,7 @@ const Footer = () => {
               <p className="m-0 p-0">
                 Developed by{" "}
                 <a
-                  href="https://judealexis.example.com"
+                  href="https://jude-alexis-dy.site"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
